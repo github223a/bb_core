@@ -36,7 +36,7 @@ func runFriendship(request rmq.Request) {
 		Source:    Core.Config.Namespace,
 	}
 
-	Core.Rabbit.(handshakeMsg)
+	// Core.Rabbit.(handshakeMsg)
 }
 
 func runInfrastructure(request rmq.Request) {

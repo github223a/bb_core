@@ -11,8 +11,8 @@ import (
 
 type Config struct {
 	Namespace     string    `json:"namespace,omitempty"`
-	UseCache      bool      `json:"useCache"`
-	UseIsInternal bool      `json:"useIsInternal"`
+	UseCache      bool      `json:"useCache,omitempty"`
+	UseIsInternal bool      `json:"useIsInternal,omitempty"`
 	Database      *Database `json:"database,omitempty"`
 	RabbitMQ      RabbitMQ  `json:"rabbitMQ,omitempty"`
 	Redis         *Redis    `json:"redis,omitempty"`

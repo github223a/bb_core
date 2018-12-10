@@ -1,7 +1,7 @@
 package core
 
 import (
-	rmq "bb-rmq"
+	rmq "bb_rmq"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -9,7 +9,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-var methods = map[string]*Method{
+var Methods = map[string]*Method{
 	"friendship":     friendship,
 	"infrastructure": infrastructure,
 }
@@ -17,46 +17,37 @@ var methods = map[string]*Method{
 var friendship = createMethod(runFriendship, friendShipMethodSettings)
 var infrastructure = createMethod(runInfrastructure, infrastructureMethodSettings)
 
-func createMethod(run func(request rmq.Request), settings MethodSettings) *Method {
+func createMethod(run func(transport rmq.RabbitMQ, request rmq.Request), settings MethodSettings) *Method {
 	return &Method{
 		Run:      run,
 		Settings: settings,
 	}
 }
 
-func runFriendship(request rmq.Request) {
+func runFriendship(transport rmq.RabbitMQ, request rmq.Request) {
 	if request.Namespace == NAMESPACE_INTERNAL {
 		return
 	}
-	handshakeMsg := rmq.Request{
-		ID:        generateId(),
-		Namespace: NAMESPACE_INTERNAL,
-		Method:    HANDSHAKE,
-		Params:    handshakeParams,
-		Source:    Core.Config.Namespace,
-	}
+	// handshakeMsg := rmq.Request{
+	// 	ID:        generateId(),
+	// 	Namespace: NAMESPACE_INTERNAL,
+	// 	Method:    HANDSHAKE,
+	// 	Params:    handshakeParams,
+	// 	Source:    Core.Config.Namespace,
+	// }
 
-	// Core.Rabbit.(handshakeMsg)
+	// transport.SendToInternal(handshakeMsg)
 }
 
-func runInfrastructure(request rmq.Request) {
-	var infrastr map[string]NamespaceSettings
+func runInfrastructure(transport rmq.RabbitMQ, request rmq.Request) {
+	var info Infrastructure
 
-	vbyte, _ := json.Marshal(request.Params["infrastructure"])
-	json.Unmarshal(vbyte, &infrastr)
+	vbyte, _ := json.Marshal(request.Params)
+	json.Unmarshal(vbyte, &info)
 
-	Core.Infrastructure = Infrastructure{
-		RedisPrefix:            request.Params["redisPrefix"].(string),
-		RedisPrefixSession:     request.Params["redisPrefixSession"].(string),
-		RedisPrefixSessionList: request.Params["redisPrefixSessionList"].(string),
-		TokenAlg:               request.Params["tokenAlg"].(string),
-		TokenKey:               request.Params["tokenKey"].(string),
-		SessionLifetime:        request.Params["sessionLifetime"].(float64),
-		Expectation:            request.Params["expectation"].(float64),
-		Sharding:               request.Params["shardings"].(map[string]Sharding),
-		Settings:               infrastr,
-	}
-	log.Printf("%sInfrastructure updated.")
+	Data.Infrastructure = info
+
+	log.Printf("Infrastructure updated.")
 }
 
 var infrastructureMethodSettings = MethodSettings{
@@ -80,7 +71,7 @@ var friendShipMethodSettings = MethodSettings{
 }
 
 var handshakeParams = map[string]interface{}{
-	"namespace": Core.Config.Namespace,
+	"namespace": Data.Config.Namespace,
 	"methods": map[string]interface{}{
 		"friendship":     friendShipMethodSettings,
 		"infrastructure": infrastructureMethodSettings,
@@ -98,8 +89,8 @@ func generateId() uuid.UUID {
 }
 
 type Method struct {
-	Run      func(request rmq.Request) `json:"run"`
-	Settings MethodSettings            `json:"settings"`
+	Run      func(transport rmq.RabbitMQ, request rmq.Request) `json:"run"`
+	Settings MethodSettings                                    `json:"settings"`
 }
 
 type MethodSettings struct {

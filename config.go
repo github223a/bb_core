@@ -1,8 +1,9 @@
 package core
 
 import (
-	rmq "bb-rmq"
+	rmq "bb_rmq"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -10,21 +11,25 @@ import (
 
 type Config struct {
 	Namespace     string    `json:"namespace,omitempty"`
-	UseCache      bool      `json:"useCache,omitempty"`
-	UseIsInternal bool      `json:"useIsInternal,omitempty"`
+	UseCache      bool      `json:"useCache"`
+	UseIsInternal bool      `json:"useIsInternal"`
 	Database      *Database `json:"database,omitempty"`
+	RabbitMQ      RabbitMQ  `json:"rabbitMQ,omitempty"`
 	Redis         *Redis    `json:"redis,omitempty"`
 	Location      *Location `json:"location,omitempty"`
-	RabbitMQ      RabbitMQ  `json:"rabbitMQ,omitempty"`
 }
 
-func (config *Config) Init(url string) {
+func (c *Config) Init(url string) {
 	configFile, err := os.Open(url)
 	FailOnError(err, "Error on open config file")
 	defer configFile.Close()
 
 	bytes, _ := ioutil.ReadAll(configFile)
-	uErr := json.Unmarshal([]byte(bytes), &config)
+	uErr := json.Unmarshal([]byte(bytes), &c)
+
+	data, err := json.MarshalIndent(c, ",", " ")
+	fmt.Printf("%+v\n", string(data))
+
 	FailOnError(uErr, "Error on unmarhal config file.")
 }
 

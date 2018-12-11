@@ -2,13 +2,15 @@ package core
 
 var Data Core
 
-type Core struct {
-	Config interface{} `json:"config"`
+type CoreConfig struct {
+	Log           Log      `json:"log"`
+	Redis         Redis    `json:"redis"`
+	RabbitMQ      RabbitMQ `json:"rabbitMQ"`
 }
 
-// func (c *Core) InitCore() {
-// 	c.initConfig()
-// }
+type Core struct {
+	Config CoreConfig `json:"config"`
+}
 
 func (*Core) InitConfig() {
 	Data.Config = ReadConfig()

@@ -88,19 +88,19 @@ package core
 // 	return id
 // }
 
-// type Method struct {
-// 	Run      func(transport rmq.RabbitMQ, request rmq.Request) `json:"run"`
-// 	Settings MethodSettings                                    `json:"settings"`
-// }
+type Method struct {
+	Run      func(transport RabbitMQ, request Request) `json:"run"`
+	Settings MethodSettings                            `json:"settings"`
+}
 
-// type MethodSettings struct {
-// 	IsInternal  bool        `json:"isInternal"`
-// 	Auth        bool        `json:"auth"`
-// 	Cache       int         `json:"cache"`
-// 	Middlewares Middlewares `json:"middlewares"`
-// }
+type MethodSettings struct {
+	IsInternal  bool        `json:"isInternal"`
+	Auth        bool        `json:"auth"`
+	Cache       int         `json:"cache"`
+	Middlewares Middlewares `json:"middlewares"`
+}
 
-// type Middlewares struct {
-// 	Before []string `json:"before"`
-// 	After  []string `json:"after"`
-// }
+type Middlewares struct {
+	Before []string `json:"before"`
+	After  []string `json:"after"`
+}

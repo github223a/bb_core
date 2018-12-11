@@ -19,10 +19,10 @@ func fileExists(path string) bool {
 	return true
 }
 
-func ReadConfig() interface{} {
-	var config interface{}
-	var configFile *(os.File)
+func ReadConfig() CoreConfig {
+	var config CoreConfig
 	var err error
+	var configFile *(os.File)
 
 	if fileExists(configPath) == true {
 		os.Setenv(appEnv, "production")

@@ -4,16 +4,16 @@ type RabbitMQ struct {
 	Connection               Connection                 `json:"connection,omitempty"`
 	Channels                 map[string]ChannelSettings `json:"channels"`
 	TestChannelName          string                     `json:"testChannelName,omitempty"`
-	TestChannelPingTimeout   int                        `json:"testChannelPingTimeout,omitempty"`
+	TestChannelPingTimeout   float64                    `json:"testChannelPingTimeout,omitempty"`
 	InfrastructureBindingKey string                     `json:"infrastructureBindingKey,omitempty"`
 }
 
 type Connection struct {
-	Protocol string `json:"protocol,omitempty" default:"amqp"`
-	Hostname string `json:"hostname,omitempty" default:"localhost"`
-	Username string `json:"username,omitempty" default:"guest"`
-	Password string `json:"password,omitempty" default:"guest"`
-	Port     int    `json:"port,omitempty" default:"5672"`
+	Protocol string  `json:"protocol,omitempty" default:"amqp"`
+	Hostname string  `json:"hostname,omitempty" default:"localhost"`
+	Username string  `json:"username,omitempty" default:"guest"`
+	Password string  `json:"password,omitempty" default:"guest"`
+	Port     float64 `json:"port,omitempty" default:"5672"`
 }
 
 type ChannelSettings struct {
@@ -26,8 +26,8 @@ type ChannelSettings struct {
 }
 
 type QueueSettings struct {
-	MessageTTL int  `json:"messageTTL,omitempty"`
-	Durable    bool `json:"durable,omitempty"`
-	NoAck      bool `json:"noAck,omitempty"`
-	AutoDelete bool `json:"autoDelete,omitempty"`
+	MessageTTL float64 `json:"messageTtl,omitempty"`
+	Durable    bool    `json:"durable,omitempty"`
+	NoAck      bool    `json:"noAck,omitempty"`
+	AutoDelete bool    `json:"autoDelete,omitempty"`
 }

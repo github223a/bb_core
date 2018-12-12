@@ -3,7 +3,6 @@ package core
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 )
 
@@ -19,8 +18,8 @@ func fileExists(path string) bool {
 	return true
 }
 
-func ReadConfig() CoreConfig {
-	var config CoreConfig
+func ReadConfig() interface{} {
+	var config interface{}
 	var err error
 	var configFile *(os.File)
 
@@ -37,19 +36,12 @@ func ReadConfig() CoreConfig {
 		configFile, err = os.Open(configTestPath)
 	}
 
-	FailOnError(err, "Error on open config file")
+	FailOnError(HEADER_APPLICATION_MESSAGE, "Error on open config file", err)
 	defer configFile.Close()
 
 	bytes, _ := ioutil.ReadAll(configFile)
 	uErr := json.Unmarshal([]byte(bytes), &config)
+	FailOnError(HEADER_APPLICATION_MESSAGE, "Error on unmarhal config file.", uErr)
 
-	FailOnError(uErr, "Error on unmarhal config file.")
 	return config
-}
-
-func FailOnError(err error, msg string) {
-	if err != nil {
-		log.Panicf("%s", msg)
-		panic(err)
-	}
 }

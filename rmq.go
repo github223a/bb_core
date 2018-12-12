@@ -26,8 +26,8 @@ type ChannelSettings struct {
 }
 
 type QueueSettings struct {
-	MessageTTL int32 `json:"messageTTL,omitempty"`
-	Durable    bool  `json:"durable,omitempty"`
-	NoAck      bool  `json:"noack,omitempty"`
-	AutoDelete bool  `json:"autoDelete,omitempty"`
+	MessageTTL int  `json:"messageTTL,omitempty"`
+	Durable    bool `json:"durable,omitempty"`
+	NoAck      bool `json:"noAck,omitempty"`
+	AutoDelete bool `json:"autoDelete,omitempty"`
 }

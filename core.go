@@ -30,5 +30,4 @@ type CoreStructure struct {
 type CommonConfig struct {
 	Log      Log      `json:"log"`
 	RabbitMQ RabbitMQ `json:"rabbitMQ"`
-	// PingTimeout int32    `json:"pingTimeout"`
 }

@@ -6,8 +6,8 @@ type InfrastructureStructure struct {
 	RedisPrefixSessionList string                        `json:"redisPrefixSessionList"`
 	TokenAlg               string                        `json:"tokenAlg"`
 	TokenKey               string                        `json:"tokenKey"`
-	SessionLifetime        uint32                        `json:"sessionLifetime"`
-	Expectation            uint32                        `json:"expectation"`
+	SessionLifetime        int64                         `json:"sessionLifetime"`
+	Expectation            int64                         `json:"expectation"`
 	Sharding               map[string]Sharding           `json:"sharding"`
 	Data                   map[string]InfrastructureData `json:"data"`
 }

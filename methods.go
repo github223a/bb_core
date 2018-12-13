@@ -96,7 +96,7 @@ type Method struct {
 type MethodSettings struct {
 	IsInternal  bool        `json:"isInternal"`
 	Auth        bool        `json:"auth"`
-	Cache       float64     `json:"cache"`
+	Cache       uint32      `json:"cache"`
 	Middlewares Middlewares `json:"middlewares"`
 }
 

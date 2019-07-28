@@ -1,4 +1,4 @@
-package core
+package config
 
 type Log struct {
 	Type         string `json:"type"`

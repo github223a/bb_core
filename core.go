@@ -1,5 +1,7 @@
 package core
 
+import "bb_core/config"
+
 var Data CoreStructure
 var Infrastructure InfrastructureStructure
 
@@ -9,7 +11,7 @@ func (*CoreStructure) InitCore() {
 }
 
 func initConfig() {
-	Data.Config = ReadConfig()
+	Data.Config = config.ReadConfig()
 }
 
 func initInfrastructure() {
@@ -28,6 +30,6 @@ type CoreStructure struct {
 }
 
 type CommonConfig struct {
-	Log      Log      `json:"log"`
-	RabbitMQ RabbitMQ `json:"rabbitMQ"`
+	Log      config.Log      `json:"log"`
+	RabbitMQ config.RabbitMQ `json:"rabbitMQ"`
 }

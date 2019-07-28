@@ -1,11 +1,11 @@
-package core
+package config
 
 type RabbitMQ struct {
 	Connection               Connection                 `json:"connection,omitempty"`
 	Channels                 map[string]ChannelSettings `json:"channels"`
-	TestChannelName          string                     `json:"testChannelName,omitempty"`
-	TestChannelPingTimeout   int64                      `json:"testChannelPingTimeout,omitempty"`
-	InfrastructureBindingKey string                     `json:"infrastructureBindingKey,omitempty"`
+	//TestChannelName          string                     `json:"testChannelName,omitempty"`
+	//TestChannelPingTimeout   int64                      `json:"testChannelPingTimeout,omitempty"`
+	//InfrastructureBindingKey string                     `json:"infrastructureBindingKey,omitempty"`
 }
 
 type Connection struct {
@@ -31,3 +31,14 @@ type QueueSettings struct {
 	NoAck      bool  `json:"noAck,omitempty"`
 	AutoDelete bool  `json:"autoDelete,omitempty"`
 }
+
+//type RabbitMQ struct {
+//	Connection RabbitSettings `json:"connection"`
+//}
+//
+//type RabbitSettings struct {
+//	Hostname string `json:"hostname"`
+//	Username string `json:"username"`
+//	Password string `json:"password"`
+//	Port uint64 `json:"port"`
+//}

@@ -1,6 +1,7 @@
-package core
+package config
 
 import (
+	"bb_core"
 	"encoding/json"
 	"io/ioutil"
 	"os"
@@ -18,8 +19,8 @@ func fileExists(path string) bool {
 	return true
 }
 
-func ReadConfig() interface{} {
-	var config interface{}
+func ReadConfig() Config {
+	var config Config
 	var err error
 	var configFile *(os.File)
 
@@ -36,12 +37,20 @@ func ReadConfig() interface{} {
 		configFile, err = os.Open(configTestPath)
 	}
 
-	FailOnError(HEADER_APPLICATION_MESSAGE, "Error on open config file", err)
+	core.FailOnError(core.HEADER_APPLICATION_MESSAGE, "Error on open config file", err)
 	defer configFile.Close()
 
 	bytes, _ := ioutil.ReadAll(configFile)
 	uErr := json.Unmarshal([]byte(bytes), &config)
-	FailOnError(HEADER_APPLICATION_MESSAGE, "Error on unmarhal config file.", uErr)
+	core.FailOnError(core.HEADER_APPLICATION_MESSAGE, "Error on unmarhal config file.", uErr)
 
 	return config
 }
+
+type Config struct {
+	Namespace string `json:"namespace"`
+	Database map[string] interface{} `json:"database"`
+	Rabbit Rabbit `json:"rabbit"`
+}
+
+

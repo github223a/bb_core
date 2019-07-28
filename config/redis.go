@@ -1,4 +1,4 @@
-package core
+package config
 
 type Redis struct {
 	Host   string `json:"host"`

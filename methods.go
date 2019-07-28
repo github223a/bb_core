@@ -1,5 +1,7 @@
 package core
 
+import "bb_core/config"
+
 // import (
 // 	rmq "bb_rmq"
 // 	"encoding/json"
@@ -89,8 +91,8 @@ package core
 // }
 
 type Method struct {
-	Run      func(transport RabbitMQ, request Request) `json:"run"`
-	Settings MethodSettings                            `json:"settings"`
+	Run      func(transport config.RabbitMQ, request Request) `json:"run"`
+	Settings MethodSettings                                   `json:"settings"`
 }
 
 type MethodSettings struct {

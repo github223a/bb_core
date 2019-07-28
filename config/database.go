@@ -1,4 +1,4 @@
-package core
+package config
 
 type Database struct {
 	Connections map[string]DatabaseSettings `json:"connections,omitempty"`

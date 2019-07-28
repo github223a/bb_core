@@ -7,3 +7,7 @@ func FailOnError(header, message string, err error) {
 		log.Fatalf("%s %s %s", header, message, err)
 	}
 }
+
+func LogDebug(header, message string) {
+	log.Printf("%s %s", header, message)
+}
